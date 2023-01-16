@@ -1,8 +1,23 @@
 import { Stack } from "@mui/material"
-import { crateria, greenBrinstar, westMaridia, redBrinstar, upperNorfair, croc, kraid, wreckedShip, eastMaridia, lowerNorfair, tourian } from "../models/Area"
+import { useSelector } from "react-redux"
+import { AreaState, CRATERIA, CROC, EAST_MARIDIA, GREEN_BRINSTAR, KRAID, LOWER_NORFAIR, RED_BRINSTAR, TOURIAN, UPPER_NORFAIR, WEST_MARIDIA, WRECKED_SHIP } from "../redux/state/AreasState"
+import { RootState } from "../redux/state/RootState"
 import Area from "./Area"
 
 export default function Areas() {
+    const { areas} = useSelector((state: RootState) => state)
+    const crateria: AreaState = areas[CRATERIA]
+    const greenBrinstar: AreaState = areas[GREEN_BRINSTAR]
+    const redBrinstar: AreaState = areas[RED_BRINSTAR]
+    const westMaridia: AreaState = areas[WEST_MARIDIA]
+    const upperNorfair: AreaState = areas[UPPER_NORFAIR]
+    const croc: AreaState = areas[CROC]
+    const kraid: AreaState = areas[KRAID]
+    const wreckedShip: AreaState = areas[WRECKED_SHIP]
+    const eastMaridia: AreaState = areas[EAST_MARIDIA]
+    const lowerNorfair: AreaState = areas[LOWER_NORFAIR]
+    const tourian: AreaState = areas[TOURIAN]
+
     return (
         <Stack direction='column' spacing={3}>
             <Stack direction='row' spacing={3}>
@@ -10,19 +25,19 @@ export default function Areas() {
                 <Area {...westMaridia} />
             </Stack>
             <Stack direction='row' spacing={3}>
-                <Area {...greenBrinstar} />
                 <Area {...redBrinstar} />
+                <Area {...greenBrinstar} />
             </Stack>
             <Stack direction='row' spacing={3}>
                 <Area {...upperNorfair} />
                 <Area {...croc} />
-                <Area {...tourian} />
+                <Area {...kraid} />
             </Stack>
             <Stack direction='row' spacing={3}>
-                <Area boss {...kraid} />
-                <Area boss {...wreckedShip} />
-                <Area boss {...eastMaridia} />
-                <Area boss {...lowerNorfair} />
+                <Area {...wreckedShip} />
+                <Area {...eastMaridia} />
+                <Area {...lowerNorfair} />
+                <Area {...tourian} />
             </Stack>
         </Stack>
     )

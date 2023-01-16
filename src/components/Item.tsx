@@ -5,7 +5,7 @@ export default function Item(props: DraggableProps) {
     const {type, value, state, xpos} = props  
     
     const itemStyles = {
-      background:`url("sm-items.png") -${xpos}px -16px`,
+      background:`url("sm-items.png") -${xpos}px -0px`,
       minWidth:16,
       minHeight:16,
       width: 16,
