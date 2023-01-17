@@ -1,13 +1,12 @@
 import * as React from 'react';
 
-import { Box, createTheme, Stack, ThemeProvider } from '@mui/material';
+import { createTheme, CssBaseline, Stack, ThemeProvider } from '@mui/material';
 import { DndContext } from '@dnd-kit/core';
 import Areas from './Areas';
 import Bosses from './Bosses';
 import Items from './Items';
 import ItemCounts from './ItemCounts';
 import { useDispatch } from 'react-redux';
-import { idText } from 'typescript';
 
 export default function App() {
     const dispatch = useDispatch()
@@ -31,16 +30,23 @@ export default function App() {
                 dragId, dragAreaId, dragType, dragValue, dropId, dropAreaId, dropType, dropValue
             }
 
-            if (dragValue) {
-                if (dropValue) {
-                    console.log("Dragged [" + dragType + "=" + dragValue + "] to [" + dropType + "=" + dropValue + "]")
-                } else {
-                    console.log("Dragged [" + dragType + "=" + dragValue + "] to [" + dropType + "]")
-                }
+            if (dragType === 'entrance' && dropType === 'area') {
+                return;
             }
-            dispatch({ type: "AREA/update-tracker", value: dragEvent })
+            console.log("Dragged [" + dragType + "=" + dragValue + "] to [" + dropType + "=" + dropValue + "]")
+            switch (dragType) {
+                case 'entrance': dispatch({ type: "PORTAL/update-portals", value: dragEvent })
+                break;
+                case 'boss': dispatch({ type: "AREA/update-boss", value: dragEvent })
+                break;
+                case 'item': dispatch({ type: "AREA/update-item", value: dragEvent })
+                break;
+                case 'itemCount': dispatch({ type: "AREA/update-itemCount", value: dragEvent })
+                default: 
+            }
         }
     }
+
     const defaultTheme = createTheme({
         palette: {
             mode: 'dark',
@@ -49,18 +55,15 @@ export default function App() {
 
     return (
         <ThemeProvider theme={defaultTheme}>
+            <CssBaseline />
             <DndContext onDragEnd={handleDragEnd}>
-                <Stack direction="row" spacing={1}>
-                    <Stack direction="column" spacing={2}>
-                        <Box padding={2}>
-                            <Areas />
-                        </Box>
-                        <Box padding={2}>
-                            <Items />
-                        </Box>
-                        <Stack direction="row" paddingX={1} paddingY={1} spacing={12}>
+                <Stack direction="row" spacing={1} margin={2}>
+                    <Stack direction="column" gap={2}>
+                        <Areas />
+                        <Items />
+                        <Stack direction="row" justifyContent='space-between' paddingRight={6}>
                             <ItemCounts />
-                            <Bosses />
+                            <Bosses/>
                         </Stack>
                     </Stack>
                 </Stack>

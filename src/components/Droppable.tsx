@@ -1,27 +1,36 @@
 import React from 'react';
 import { useDroppable } from '@dnd-kit/core';
 import { Box } from '@mui/material';
-import { v4 as uuidv4 } from 'uuid';
 
 export type DroppableProps = {
+    id: number,
+    areaId?: number,
     type: string,
     value?: string,
+    state?: string,
     children: any
 }
 
-export default function Droppable(props: DroppableProps) {
-    const id = uuidv4()
-    return <DroppableInner id={id} {...props} />
+export type DroppableInnerProps = DroppableProps & {
+    dropId: string
 }
 
-function DroppableInner(props: any) {
-    const { id, type, value, children } = props
-    const { isOver, setNodeRef } = useDroppable({ id });
+export default function Droppable(props: DroppableProps) {
+    const { id, type } = props
+    const dropId = type + '-' + (id ?? 0)
+    return <DroppableInner dropId={dropId} {...props} />
+}
+
+function DroppableInner(props: DroppableInnerProps) {
+    const { id, areaId, type, value, dropId, children } = props
+    const { isOver, setNodeRef } = useDroppable({ id: dropId });
     const style = {
-        filter: isOver ? 'brightness(70%)' : undefined,
+        filter: isOver ? 'brightness(70%)' : undefined
     };
+
     return (
-        <Box data-type={type} data-value={value} ref={setNodeRef} style={style}>
+        <Box data-id={id} data-area-id={areaId} data-type={type} data-value={value}
+            ref={setNodeRef} style={style} position='relative'>
             {children}
         </Box>
     );

@@ -4,7 +4,6 @@ import { BossState, DRAYGON, KRAID, PHANTOON, RIDLEY } from "../redux/state/Boss
 import { RootState } from "../redux/state/RootState"
 import Boss from "./Boss"
 import Draggable from "./Draggable"
-import Droppable from "./Droppable"
 
 export default function Bosses() {
     const { bosses } = useSelector((state: RootState) => state)
@@ -19,15 +18,15 @@ export default function Bosses() {
         const {id, value, state} = boss
         const xpos = 16*id
         return (
-            <Draggable key={id}><Boss id={id} type='boss' value={value} state={state} xpos={xpos}/></Draggable>
+            <Draggable key={id} id={id} type='boss' value={value} state={state}>
+                <Boss xpos={xpos}/>
+            </Draggable>
         )
     })
 
     return (
-        <Droppable type='bosses'>
-            <Stack direction='row' spacing={1}>
-                {elements}
-            </Stack>
-        </Droppable>
+        <Stack direction='row' spacing={3}>
+            {elements}
+        </Stack>
     )
 }

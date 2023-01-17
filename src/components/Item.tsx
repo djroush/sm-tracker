@@ -1,21 +1,20 @@
 import { Box } from "@mui/material"
-import { DraggableProps } from "./Draggable"
 
-export default function Item(props: DraggableProps) {
-    const {type, value, state, xpos} = props  
-    
+export type ItemProps = {
+    xpos: number
+}
+
+export default function Item(props: ItemProps) {
+    const { xpos } = props
+
     const itemStyles = {
-      background:`url("sm-items.png") -${xpos}px -0px`,
-      minWidth:16,
-      minHeight:16,
-      width: 16,
-      height: 16,
-      transform: 'scale(4)'
+        background: `url("sm-items.png") -${xpos}px -0px`,
+        minWidth: 16,
+        minHeight: 16,
+        width: 16,
+        height: 16,
+        transform: 'scale(4) translate(37.5%, 37.5%)'
     }
 
-    return (
-        <Box display='flex' alignItems='center' justifyContent='center'>
-            <img data-type={type} data-value={value} data-state={state} style={itemStyles}/>
-        </Box>
-    )
+    return <Box component="img" zIndex={-500} position="absolute" style={itemStyles}/>
 }

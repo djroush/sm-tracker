@@ -1,9 +1,9 @@
 import {  Box, useTheme } from "@mui/material"
-import  { DraggableProps } from "./Draggable"
+import { BossProps } from "./Boss"
 
 
-export default function AreaBoss(props: DraggableProps) {
-    const { type, value, state, xpos } = props
+export default function AreaBoss(props: BossProps) {
+    const { xpos } = props
 
     const theme = useTheme()
     const bgColor = theme.palette.background.default
@@ -18,8 +18,8 @@ export default function AreaBoss(props: DraggableProps) {
     }
 
     return (
-        <Box display='flex' alignItems='center' minWidth={64} minHeight={64} justifyContent='center' bgcolor={bgColor}>
-            <img data-type={type} data-value={value} data-state={state} style={bossStyles} />
+        <Box display='flex' alignItems='center' width={64} height={64} justifyContent='center' bgcolor={bgColor}>
+            <img style={bossStyles} />
         </Box>
     )
 }

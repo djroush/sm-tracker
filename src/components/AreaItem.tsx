@@ -1,9 +1,8 @@
 import { Box, useTheme } from "@mui/material"
-import { DraggableProps } from "./Draggable"
+import { ItemProps } from "./Item"
 
-
-export default function AreaItem(props: DraggableProps) {
-    const {type, value, state, xpos} = props  
+export default function AreaItem(props: ItemProps) {
+    const {xpos} = props  
     
     const theme = useTheme()
     const bgColor = theme.palette.background.default
@@ -18,8 +17,8 @@ export default function AreaItem(props: DraggableProps) {
       }
   
     return (
-        <Box display='flex' padding={1} alignItems='center' minWidth={32} minHeight={32} justifyContent='center' bgcolor={bgColor}>
-            <img data-type={type} data-value={value} data-state={state} style={areaItemStyles}/>
+        <Box display='flex' alignItems='center' minWidth={32} minHeight={32} justifyContent='center' bgcolor={bgColor}>
+            <img style={areaItemStyles}/>
         </Box>
     )
 }

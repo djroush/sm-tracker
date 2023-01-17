@@ -1,37 +1,43 @@
 import React from 'react';
 import { useDraggable } from '@dnd-kit/core';
 import { CSS } from '@dnd-kit/utilities'
-import { Button } from '@mui/material';
-import { v4 as uuidv4 } from 'uuid';
+import { Box } from '@mui/material';
 
 export type DraggableProps = {
   id: number,
+  areaId?: number,
   type: string,
   value: string,
-  state: string,
-  xpos: number
+  state?: string,
+  children: any
 }
+
 
 //Still used by Entrance for now
-export type DraggablePortalProps = DraggableProps & {
-  areaId: number
-  ypos: number
+export type DraggableInnerProps = DraggableProps & {
+  dragId: string
 }
 
-export default function Draggable(props: any) {
-  const id = uuidv4()
-  return <DraggableInner id={id} {...props} />
+export default function Draggable(props: DraggableProps) {
+  const { id, type } = props
+  const dragId = type + '-' + (id ?? 0)
+
+  return <DraggableInner dragId={dragId} {...props} />
 }
 
-function DraggableInner(props: any) {
-  const { id, children } = props
-  const { attributes, listeners, setNodeRef, transform } = useDraggable({ id: id });
+function DraggableInner(props: DraggableInnerProps) {
+  const { id, areaId, type, value, dragId, children } = props
+  const { attributes, listeners, setNodeRef, transform } = useDraggable({ id: dragId });
+  const { width, height } = type === 'entrance' ? {width:143,height:30} : {width:64,height:64}
   const style = transform ? {
-    transform: CSS.Translate.toString(transform)
-  } : undefined;
+    transform: CSS.Translate.toString(transform),
+  } : {}
+
   return (
-    <Button ref={setNodeRef} style={style} {...listeners} {...attributes}>
-      {children}
-    </Button>
+    <Box data-id={id} data-area-id={areaId} data-type={type} data-value={value}
+      position="relative" width={width} height={height} 
+      ref={setNodeRef} style={style} {...listeners} {...attributes}>
+          {children}
+    </Box>
   );
 }

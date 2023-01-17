@@ -1,0 +1,26 @@
+// import { Box } from "@mui/material"
+
+// export type EntranceProps = ItemProps & {
+//     areaId?: number,
+//     xpos?: number,
+//     ypos?: number
+// }
+
+
+// export default function Entry(props: DraggablePortalProps) {
+//     const {type, value, xpos, ypos} = props  
+    
+//     const imageStyles = {
+//       background:`url("sm-portals.png") -${xpos}px -${ypos}px`,
+//       minWidth:64,
+//       minHeight:64,
+//       width: 64,
+//       height: 64,
+//     }
+
+//     return (
+//         <Box display='flex' paddingX={1} alignItems='center' minWidth={64} minHeight={64} justifyContent='center'>
+//             <img style={imageStyles}/>
+//         </Box>
+//     )
+// }

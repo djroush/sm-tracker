@@ -1,5 +1,6 @@
 import { defaultBossesState } from "../state/BossesState";
 
-export const BossesReducer = (state = defaultBossesState, action: any) => {
+//Boss data is static, so nothing happening here
+export const BossesReducer = (state = defaultBossesState) => {
   return state;
 };

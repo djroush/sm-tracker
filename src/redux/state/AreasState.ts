@@ -1,4 +1,5 @@
 //TODO: change portals to portalIds????
+export const UNKNOWN = 0
 export const CRATERIA = 1
 export const GREEN_BRINSTAR = 2
 export const RED_BRINSTAR = 3
@@ -15,19 +16,22 @@ export type AreaState = {
     id: number,
     bgColor: string,
     value: string,
+    itemIds: number[],
+    maxItems: number,
     bossId?:number
 }
+//TODO add max items here 
 export const defaultAreasState: AreaState[] = [
-    { id: 0, value: 'Unknown', bgColor: '#000000' },
-    { id: 1, value: 'Crateria', bgColor: '#3B4878' },
-    { id: 2, value: 'Green Brinstar', bgColor: '#42823D'},
-    { id: 3, value: 'Red Brinstar', bgColor: '#963F39' }, 
-    { id: 4, value: 'West Maridia', bgColor: '#3C6454' },
-    { id: 5, value: 'Upper Norfair', bgColor: '#E27400' },
-    { id: 6, value: 'Croc', bgColor: '#F8280F' }, 
-    { id: 7, value: 'Kraid', bgColor: '#3F3E24', bossId:1},
-    { id: 8, value: 'Wrecked Ship', bgColor: '#90896D', bossId:2},
-    { id: 9, value: 'East Maridia', bgColor: '#A77DA3', bossId:3},
-    { id: 10, value: 'Lower Norfair', bgColor: '#D68C73', bossId:4},
-    { id: 11, value: 'Tourian', bgColor: '#818181'}
+    { id: 0, value: 'Unknown', bgColor: '#000000' , itemIds: [], maxItems: 0},
+    { id: 1, value: 'Crateria', bgColor: '#3B4878', itemIds: [], maxItems: 17},
+    { id: 2, value: 'Green Brinstar', bgColor: '#42823D', itemIds: [], maxItems: 16},
+    { id: 3, value: 'Red Brinstar', bgColor: '#963F39', itemIds: [], maxItems: 5 }, 
+    { id: 4, value: 'West Maridia', bgColor: '#3C6454', itemIds: [], maxItems: 7 },
+    { id: 5, value: 'Upper Norfair', bgColor: '#E27400', itemIds: [], maxItems: 15 },
+    { id: 6, value: 'Croc', bgColor: '#F8280F', itemIds: [], maxItems: 5 }, 
+    { id: 7, value: 'Kraid', bgColor: '#3F3E24', itemIds: [], maxItems: 3, bossId:0},
+    { id: 8, value: 'Wrecked Ship', bgColor: '#FFD700', itemIds: [], maxItems: 11, bossId:0},
+    { id: 9, value: 'East Maridia', bgColor: '#A77DA3', itemIds: [], maxItems: 11, bossId:0},
+    { id: 10, value: 'Lower Norfair', bgColor: '#D68C73', itemIds: [], maxItems: 10, bossId:0},
+    { id: 11, value: 'Tourian', bgColor: '#818181',  itemIds: [], maxItems: 0}
 ]
