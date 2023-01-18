@@ -14,28 +14,30 @@ export default function Area(props: AreaState) {
 
     const { portals } = useSelector((state: RootState) => state)
     const areaPortals: PortalState[] = portals.filter(portal => portal.areaId === id)
-    const portalElements = areaPortals.map(portal => <AreaPortal key={portal.id} portal={portal} />)
-    const itemElements = itemIds.map(itemId => <AreaItem key={itemId} xpos={16*itemId} />)
+    const portalElements = areaPortals.map(portal => <AreaPortal key={portal.id} portal={portal} bgColor={bgColor}/>)
+    const itemElements = itemIds.map((itemId, index) => {
+        const key = id.toString() + '-' + index.toString()
+        return <AreaItem key={key} xpos={16 * itemId} />
+    })
 
     return (
         <Droppable id={id} areaId={id} type='area' value={value}>
             <Stack direction="column" position='relative' zIndex={0} spacing={1}>
-                <Stack direction='row' justifyContent="space-between" alignItems='center' height={32} bgcolor={bgColor} >
+                <Stack direction='row' justifyContent="space-between" alignItems='center' bgcolor={bgColor} paddingY={0.5} >
                     <Typography textTransform='uppercase' fontWeight='bolder' fontSize={20} paddingLeft={1}>{value}</Typography>
                     {/* TODO: add fix item count here */}
-                    <Stack direction='row' spacing={1} justifyContent='center'>
+                    <Stack direction='row' spacing={1} justifyContent='center' paddingRight={1}>
                         {itemElements}
                     </Stack>
                 </Stack>
 
                 <Stack direction='row' alignItems='center' spacing={1}>
                     <Stack direction='row' spacing={1.5}>
-                    {portalElements}
+                        {portalElements}
                     </Stack>
 
-                    {/*TODO: unhardcode this */}
                     {bossId === undefined ? null : (
-                        <AreaBoss xpos={16 * bossId} />
+                        <AreaBoss xpos={16 * bossId} outlineColor={bgColor}/>
                     )}
                 </Stack>
             </Stack>

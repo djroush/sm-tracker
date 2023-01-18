@@ -198,7 +198,7 @@ export const defaultPortalState: PortalState[] = [{
     id: 25,
     areaId: 7,
     entrance: 'Kraid',
-    entranceColor: '#3F3E24',
+    entranceColor: '#73C403',
     exit: null,
     exitColor: null
 }, {
@@ -219,14 +219,14 @@ export const defaultPortalState: PortalState[] = [{
     id: 28,
     areaId: 9,
     entrance: 'Aqueduct',
-    entranceColor: '#A77DA3',
+    entranceColor: '#B076FF',
     exit: null,
     exitColor: null
 }, {
     id: 29,
     areaId: 9,
     entrance: 'Highway',
-    entranceColor: '#A77DA3',
+    entranceColor: '#B076FF',
     exit: null,
     exitColor: null
 }, {

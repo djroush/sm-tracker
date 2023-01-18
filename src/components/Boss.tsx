@@ -1,7 +1,7 @@
 import { Box } from "@mui/material"
 
 export type BossProps = {
-    xpos: number
+    xpos: number,
 }
 
 export default function Boss(props: BossProps) {

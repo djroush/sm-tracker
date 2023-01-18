@@ -23,14 +23,12 @@ export default function Droppable(props: DroppableProps) {
 
 function DroppableInner(props: DroppableInnerProps) {
     const { id, areaId, type, value, dropId, children } = props
-    const { isOver, setNodeRef } = useDroppable({ id: dropId });
-    const style = {
-        filter: isOver ? 'brightness(70%)' : undefined
-    };
+    const { setNodeRef } = useDroppable({ id: dropId });
+  
 
     return (
         <Box data-id={id} data-area-id={areaId} data-type={type} data-value={value}
-            ref={setNodeRef} style={style} position='relative'>
+            ref={setNodeRef} position='relative'>
             {children}
         </Box>
     );

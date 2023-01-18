@@ -61,7 +61,7 @@ export default function App() {
                     <Stack direction="column" gap={2}>
                         <Areas />
                         <Items />
-                        <Stack direction="row" justifyContent='space-between' paddingRight={6}>
+                        <Stack direction="row" justifyContent='space-between' paddingRight={1.25}>
                             <ItemCounts />
                             <Bosses/>
                         </Stack>

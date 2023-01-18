@@ -28,7 +28,7 @@ export default function Draggable(props: DraggableProps) {
 function DraggableInner(props: DraggableInnerProps) {
   const { id, areaId, type, value, dragId, children } = props
   const { attributes, listeners, setNodeRef, transform } = useDraggable({ id: dragId });
-  const { width, height } = type === 'entrance' ? {width:143,height:30} : {width:64,height:64}
+  const { width, height } = type === 'entrance' ? {width:143,height:60} : {width:64,height:64}
   const style = transform ? {
     transform: CSS.Translate.toString(transform),
   } : {}

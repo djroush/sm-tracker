@@ -1,4 +1,4 @@
-import { Box, Typography, useTheme } from "@mui/material"
+import { Typography, useTheme } from "@mui/material"
 
 export type ItemCountProps = {
     value: number

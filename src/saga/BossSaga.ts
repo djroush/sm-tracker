@@ -7,9 +7,10 @@ function* updateAreaBoss(event: any, state: RootState) {
     const updatedBossId = Number(event.value.dragId)
     const updatedAreaId = Number(event.value.dropAreaId)
     const updatedArea = areas[updatedAreaId]
-    const updatedAreaState: AreaState = {...updatedArea, bossId: updatedBossId}
-
-    yield put({type:'AREAS/persist-area', value:updatedAreaState});
+    if (updatedArea.bossId !== undefined) {
+        const updatedAreaState: AreaState = {...updatedArea, bossId: updatedBossId}
+        yield put({type:'AREAS/persist-area', value:updatedAreaState});    
+    }
 }
 
 export function* workerBosses(event: any) {

@@ -11,13 +11,17 @@ function* updateItems(event: any, state: RootState) {
     const updatedItem = {...items[updatedItemId]}
     const oldAreaId = updatedItem.areaId
 
+    //Check for space before inserting item
+    const {maxItems, itemIds} = updatedArea
+    const currentItems = itemIds.length
+    if (currentItems>=maxItems) {
+        return;
+    }
+
     //Remove item from old area
     if ( oldAreaId !== UNKNOWN) {
         const oldArea = {...areas[oldAreaId]}
         const oldAreaState: AreaState = {...oldArea, itemIds: [...oldArea.itemIds]}
-
-        //TODO: when removing items, need to replace removed item with unknown item
-        //TODO: need to add itemCount for areaState?
 
         const oldItemIds = oldAreaState.itemIds
         const matchingIndex = oldItemIds.findIndex(itemId => itemId === updatedItem.id)
@@ -27,8 +31,12 @@ function* updateItems(event: any, state: RootState) {
             yield put ({type: 'AREAS/persist-area', value: oldAreaState})
         }
     }
-    //Add item to new area
-    updatedAreaState.itemIds.push(updatedItem.id)
+    const insertIndex = itemIds.findIndex(itemId => itemId === UNKNOWN)
+    if (insertIndex >= 0) {
+        updatedAreaState.itemIds[insertIndex] = updatedItem.id
+    } else {
+        updatedAreaState.itemIds.push(updatedItem.id)
+    }
     updatedItem.areaId = updatedAreaId
     yield all([
         put({type:'AREAS/persist-area', value:updatedAreaState}),
