@@ -15,8 +15,8 @@ export default function Area(props: AreaState) {
     const { portals } = useSelector((state: RootState) => state)
     const areaPortals: PortalState[] = portals.filter(portal => portal.areaId === id)
     const AreaPortals = areaPortals.map(portal => (
-        <Grid item>
-            <AreaPortal key={portal.id} portal={portal} bgColor={bgColor} />
+        <Grid key={portal.id} item>
+            <AreaPortal portal={portal} bgColor={bgColor} />
         </Grid>
     ));
 
