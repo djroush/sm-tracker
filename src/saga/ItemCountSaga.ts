@@ -12,11 +12,17 @@ function* updateItemCounts(event: any, state: RootState) {
     const updatedItemCount = Math.min(itemCount, updatedArea.maxItems)
     const currentItemCount = currentItemIds.length
     const missingItemCount =  updatedItemCount - currentItemCount
-    const missingItems: number[] = [...Array(missingItemCount)].map(x => 0)
 
-    updatedAreaState.itemIds.push(...missingItems)
-
-    yield put({type:'AREAS/persist-area', value:updatedAreaState});
+    if (missingItemCount < 0) {
+        const removeItemCount = Math.abs(missingItemCount)
+        const removeIndex = currentItemCount-removeItemCount
+        currentItemIds.splice(removeIndex, removeItemCount)
+        yield put({type:'AREAS/persist-area', value:updatedAreaState});
+    } else if (missingItemCount > 0) {
+        const missingItems: number[] = [...Array(missingItemCount)].map(x => 0)
+        updatedAreaState.itemIds.push(...missingItems)
+        yield put({type:'AREAS/persist-area', value:updatedAreaState});
+    }
 }
 
 export function* workerItemCounts(event: any) {
