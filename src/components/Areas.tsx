@@ -19,21 +19,21 @@ export default function Areas() {
     const tourian: AreaState = areas[TOURIAN]
 
     return (
-        <Stack direction='column' spacing={3}>
-            <Stack direction='row' spacing={3}>
+        <Stack direction='column' spacing={1}>
+            <Stack direction='row' spacing={3} pt={2}>
                 <Area {...crateria} />
                 <Area {...westMaridia} />
             </Stack>
-            <Stack direction='row' spacing={3}>
+            <Stack direction='row' spacing={3} pt={2}>
                 <Area {...redBrinstar} />
                 <Area {...greenBrinstar} />
             </Stack>
-            <Stack direction='row' spacing={3}>
+            <Stack direction='row' spacing={3} pt={2}>
                 <Area {...upperNorfair} />
                 <Area {...croc} />
                 <Area {...kraid} />
             </Stack>
-            <Stack direction='row' spacing={3}>
+            <Stack direction='row' spacing={3} pt={2}>
                 <Area {...wreckedShip} />
                 <Area {...eastMaridia} />
                 <Area {...lowerNorfair} />

@@ -23,7 +23,7 @@ export default function AreaBoss(props: AreaBossProps) {
     }
 
     return (
-        <Box display='flex' alignItems='center' width={64} height={64} justifyContent='center' bgcolor={bgColor}>
+        <Box display='flex' alignItems='center' marginLeft={1} marginTop={1} width={64} height={64} justifyContent='center' bgcolor={bgColor}>
             <img style={bossStyles} />
         </Box>
     )

@@ -1,4 +1,5 @@
 import '@/styles/globals.css'
+import '@/styles/muiTheme.css'
 
 import type { AppProps } from 'next/app'
 

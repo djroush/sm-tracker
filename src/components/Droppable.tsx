@@ -28,7 +28,7 @@ function DroppableInner(props: DroppableInnerProps) {
 
     return (
         <Box data-id={id} data-area-id={areaId} data-type={type} data-value={value}
-            ref={setNodeRef} position='relative'>
+            ref={setNodeRef} position='relative' >
             {children}
         </Box>
     );

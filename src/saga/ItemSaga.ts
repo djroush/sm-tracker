@@ -18,6 +18,11 @@ function* updateItems(event: any, state: RootState) {
         return;
     }
 
+    //Do nothing if item already exists
+    const existingIndex = updatedAreaState.itemIds.findIndex(itemId => itemId === updatedItemId)
+    if (existingIndex >= 0) {
+        return
+    }
     //Remove item from old area
     if ( oldAreaId !== UNKNOWN) {
         const oldArea = {...areas[oldAreaId]}
@@ -31,6 +36,7 @@ function* updateItems(event: any, state: RootState) {
             yield put ({type: 'AREAS/persist-area', value: oldAreaState})
         }
     }
+
     const insertIndex = itemIds.findIndex(itemId => itemId === UNKNOWN)
     if (insertIndex >= 0) {
         updatedAreaState.itemIds[insertIndex] = updatedItem.id

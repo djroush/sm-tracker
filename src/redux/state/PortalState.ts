@@ -239,7 +239,7 @@ export const defaultPortalState: PortalState[] = [{
 }, {
     id: 31,
     areaId: 10,
-    entrance: 'Escape',
+    entrance: 'LN Escape',
     entranceColor: '#D68C73',
     exit: null,
     exitColor: null
