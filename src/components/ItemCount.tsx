@@ -12,7 +12,7 @@ export default function ItemCount(props: ItemCountProps) {
     const border = `2px solid ${color}`
 
     return (
-        <Typography component="span" zIndex={-1000} position='absolute' width={64} height={64} border={border} 
-            textAlign='center'fontSize={36} color={color} >{value}</Typography>
+        <Typography component="span" zIndex={-1000} position='absolute' border={border}
+            textAlign='center'fontSize={36} width={64} height={64} fontWeight='bold' color={color} >{value}</Typography>
     )
 }

@@ -35,7 +35,7 @@ function DraggableInner(props: DraggableInnerProps) {
 
   return (
     <Box data-id={id} data-area-id={areaId} data-type={type} data-value={value}
-      position="relative" width={width} height={height} 
+      position="relative" width={width} height={height} alignItems='center' justifyContent='center'
       ref={setNodeRef} style={style} {...listeners} {...attributes}>
           {children}
     </Box>
