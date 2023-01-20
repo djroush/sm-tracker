@@ -7,6 +7,7 @@ import Bosses from './Bosses';
 import Items from './Items';
 import ItemCounts from './ItemCounts';
 import { useDispatch } from 'react-redux';
+import RemoveBossIcon from './RemoveBoss';
 
 export default function App() {
     const dispatch = useDispatch()
@@ -35,6 +36,8 @@ export default function App() {
                 case 'item': dispatch({ type: "ITEMS/update-item", event: dragEvent })
                     break;
                 case 'itemCount': dispatch({ type: "ITEMCOUNT/update-itemCount", event: dragEvent })
+                    break;
+                case 'icon': dispatch({ type: "BOSS/delete-boss", event: dragEvent })
                 default:
             }
         }
@@ -65,6 +68,7 @@ export default function App() {
                         <Stack direction="row" justifyContent='space-between' paddingRight={1.25}>
                             <ItemCounts />
                             <Bosses />
+                            <RemoveBossIcon />
                         </Stack>
                     </Stack>
                 </Stack>
