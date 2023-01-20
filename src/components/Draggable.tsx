@@ -3,15 +3,18 @@ import { useDraggable } from '@dnd-kit/core';
 import { CSS } from '@dnd-kit/utilities'
 import { Box } from '@mui/material';
 
-export type DraggableProps = {
+export type DragState = {
   id: number,
   areaId?: number,
   type: string,
   value: string,
-  state?: string,
-  children: any
+  state?: number,
 }
 
+export type DraggableProps = DragState & {
+  children: JSX.Element|JSX.Element[]|React.ReactFragment,
+  clickHandler?: (dragState: DragState) => void
+}
 
 //Still used by Entrance for now
 export type DraggableInnerProps = DraggableProps & {
@@ -26,18 +29,26 @@ export default function Draggable(props: DraggableProps) {
 }
 
 function DraggableInner(props: DraggableInnerProps) {
-  const { id, areaId, type, value, dragId, children } = props
-  const { attributes, listeners, setNodeRef, transform } = useDraggable({ id: dragId });
-  const { width, height } = type === 'entrance' ? {width:143,height:64} : {width:64,height:64}
+  const { type } = props
+  const { dragId, children, clickHandler, ...dataState } = props
+  const { attributes, listeners, setNodeRef, transform } = useDraggable({ id: dragId, data: { ...dataState } });
+  const { width, height } = type === 'entrance' ? { width: 143, height: 64 } : { width: 64, height: 64 }
   const style = transform ? {
     transform: CSS.Translate.toString(transform),
   } : {}
 
-  return (
-    <Box data-id={id} data-area-id={areaId} data-type={type} data-value={value}
-      position="relative" width={width} height={height} alignItems='center' justifyContent='center'
+  const Draggable: JSX.Element = (
+    <Box position="relative" width={width} height={height} alignItems='center' justifyContent='center'
       ref={setNodeRef} style={style} {...listeners} {...attributes}>
-          {children}
+      {children}
     </Box>
   );
+
+  if (clickHandler) {
+    return (
+      <Box onClick={() => clickHandler(dataState)}>{Draggable}</Box>
+    )
+  }
+
+  return Draggable
 }

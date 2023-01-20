@@ -2,13 +2,14 @@ import { Box } from "@mui/material"
 
 export type ItemProps = {
     xpos: number
+    ypos: number
 }
 
 export default function Item(props: ItemProps) {
-    const { xpos } = props
+    const { xpos, ypos } = props
 
     const itemStyles = {
-        background: `url("sm-items.png") -${xpos}px -0px`,
+        background: `url("sm-items.png") -${xpos}px -${ypos}px`,
         minWidth: 16,
         minHeight: 16,
         width: 16,

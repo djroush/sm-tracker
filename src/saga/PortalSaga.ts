@@ -2,12 +2,15 @@ import { takeLatest, select, put } from 'redux-saga/effects';
 import { PortalState } from '../redux/state/PortalState';
 import { RootState } from '../redux/state/RootState';
 
-function* updatePortal(event: any, state: RootState) {
+function* updatePortal(action: any, state: RootState) {
     const {portals, areas} = state
-    const entrancePortalId = Number(event.value.dropId)
-    const entranceAreaId = Number(event.value.dropAreaId)
-    const exitPortalId = Number(event.value.dragId)
-    const exitAreaId = Number(event.value.dragAreaId)
+    const entrancePortalId = Number(action.event.dropId)
+    const entranceAreaId = Number(action.event.dropAreaId)
+    const exitPortalId = Number(action.event.dragId)
+    const exitAreaId = Number(action.event.dragAreaId)
+    if (Number.isNaN(exitAreaId)) {
+        return
+    }
     const entrancePortal: PortalState = portals[entrancePortalId]
     const exitPortal: PortalState = portals[exitPortalId]
     const entranceColor = areas[entranceAreaId].bgColor
@@ -29,25 +32,25 @@ function* updatePortal(event: any, state: RootState) {
     const detachedExitPortalIndex = portals.findIndex(portal => portal.exit === exitEntrance)
     if (detachedExitPortalIndex >= 0) {
         const detachedPortal = {...portals[detachedExitPortalIndex], exit: null, exitColor: null}
-        yield put({type:'PORTALS/persist-portal', value:detachedPortal}); 
+        yield put({type:'PORTALS/persist-portal', event:detachedPortal}); 
     }
     const detachedEntrancePortalIndex = portals.findIndex(portal => portal.exit === entranceEntrance)
     if (detachedEntrancePortalIndex >= 0) {
         const detachedPortal = {...portals[detachedEntrancePortalIndex], exit: null, exitColor: null}
-        yield put({type:'PORTALS/persist-portal', value:detachedPortal}); 
+        yield put({type:'PORTALS/persist-portal', event:detachedPortal}); 
     }
 
 
     const updatedExitPortal: PortalState = {...exitPortal, exit: entranceEntrance, exitColor: entranceColor}
     const updatedEntrancePortal: PortalState = {...entrancePortal, exit: exitEntrance, exitColor: exitColor}
 
-    yield put({type:'PORTALS/persist-portal', value:updatedExitPortal});
-    yield put({type:'PORTALS/persist-portal', value:updatedEntrancePortal});
+    yield put({type:'PORTALS/persist-portal', event:updatedExitPortal});
+    yield put({type:'PORTALS/persist-portal', event:updatedEntrancePortal});
 }
 
-export function* workerPortals(event: any) {
+export function* workerPortals(action: any) {
     const state: RootState = yield select((state: RootState) => state)
-    yield updatePortal(event, state);
+    yield updatePortal(action, state);
 }
 
 export default function* watchPortals() {

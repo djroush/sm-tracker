@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import { createTheme, CssBaseline, Stack, ThemeProvider } from '@mui/material';
-import { DndContext } from '@dnd-kit/core';
+import { DndContext, PointerSensor, useSensor, useSensors } from '@dnd-kit/core';
 import Areas from './Areas';
 import Bosses from './Bosses';
 import Items from './Items';
@@ -12,37 +12,30 @@ export default function App() {
     const dispatch = useDispatch()
 
     const handleDragEnd = (event: any) => {
-        const { activatorEvent, collisions } = event
-        const draggable = activatorEvent?.target
-        const droppable = collisions[0]?.data?.droppableContainer?.node?.current
+        const dragData = event?.active?.data?.current 
+        const dropData = event?.over?.data?.current
 
-        if (draggable && droppable) {
-            const dragId = draggable.getAttribute('data-id')
-            const dragAreaId = draggable.getAttribute('data-area-id')
-            const dragType = draggable.getAttribute('data-type')
-            const dragValue = draggable.getAttribute('data-value')
-            const dropId = droppable.getAttribute('data-id')
-            const dropAreaId = droppable.getAttribute('data-area-id')
-            const dropType = droppable.getAttribute('data-type')
-            const dropValue = droppable.getAttribute('data-value')
-
+        if (dragData && dropData) {
             const dragEvent = {
-                dragId, dragAreaId, dragType, dragValue, dropId, dropAreaId, dropType, dropValue
+                drag: dragData,
+                drop: dropData,
+                dragId: dragData.id , dragAreaId: dragData.areaId, dragType: dragData.type, dragValue: dragData.value,
+                dropId: dropData.id , dropAreaId: dropData.areaId, dropType: dropData.type, dropValue: dropData.value,
             }
 
-            if (dragType === 'entrance' && dropType === 'area') {
+            if (dragData.type === 'entrance' && dropData.type === 'area') {
                 return;
             }
-            console.log("Dragged [" + dragType + "=" + dragValue + "] to [" + dropType + "=" + dropValue + "]")
-            switch (dragType) {
-                case 'entrance': dispatch({ type: "PORTAL/update-portals", value: dragEvent })
-                break;
-                case 'boss': dispatch({ type: "AREA/update-boss", value: dragEvent })
-                break;
-                case 'item': dispatch({ type: "AREA/update-item", value: dragEvent })
-                break;
-                case 'itemCount': dispatch({ type: "AREA/update-itemCount", value: dragEvent })
-                default: 
+            console.log("Dragged [" + dragData.type + "=" + dragData.value + "] to [" + dropData.type + "=" + dropData.value + "]")
+            switch (dragData.type) {
+                case 'entrance': dispatch({ type: "PORTAL/update-portals", event: dragEvent })
+                    break;
+                case 'boss': dispatch({ type: "BOSS/update-boss", event: dragEvent })
+                    break;
+                case 'item': dispatch({ type: "ITEMS/update-item", event: dragEvent })
+                    break;
+                case 'itemCount': dispatch({ type: "ITEMCOUNT/update-itemCount", event: dragEvent })
+                default:
             }
         }
     }
@@ -53,17 +46,25 @@ export default function App() {
         },
     });
 
+    const sensors = useSensors(
+        useSensor(PointerSensor, {
+            activationConstraint: {
+                distance: 8
+            },
+        })
+    )
+
     return (
         <ThemeProvider theme={defaultTheme}>
             <CssBaseline />
-            <DndContext onDragEnd={handleDragEnd}>
+            <DndContext sensors={sensors} onDragEnd={handleDragEnd} >
                 <Stack direction="row" spacing={1} margin={2}>
                     <Stack direction="column" gap={2}>
                         <Areas />
                         <Items />
                         <Stack direction="row" justifyContent='space-between' paddingRight={1.25}>
                             <ItemCounts />
-                            <Bosses/>
+                            <Bosses />
                         </Stack>
                     </Stack>
                 </Stack>

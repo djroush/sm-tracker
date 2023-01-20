@@ -8,7 +8,8 @@ export type DroppableProps = {
     type: string,
     value?: string,
     state?: string,
-    children: any
+    children: any,
+    clickHandler?: (event: any) => void
 }
 
 export type DroppableInnerProps = DroppableProps & {
@@ -22,14 +23,20 @@ export default function Droppable(props: DroppableProps) {
 }
 
 function DroppableInner(props: DroppableInnerProps) {
-    const { id, areaId, type, value, dropId, children } = props
-    const { setNodeRef } = useDroppable({ id: dropId });
-  
+    const { dropId, children, clickHandler, ...dataState } = props
+    const { setNodeRef } = useDroppable({ id: dropId, data: dataState });
 
-    return (
-        <Box data-id={id} data-area-id={areaId} data-type={type} data-value={value}
-            ref={setNodeRef} position='relative' >
+    const Droppable: JSX.Element = (
+        <Box ref={setNodeRef} position='relative' >
             {children}
         </Box>
     );
+
+    if (clickHandler) {
+        return (
+            <Box onClick={() => clickHandler(dataState)}>{Droppable}</Box>
+        )
+    }
+
+    return Droppable;
 }

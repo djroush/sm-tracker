@@ -2,10 +2,13 @@ import { takeLatest, select, put, all } from 'redux-saga/effects';
 import { AreaState, UNKNOWN } from '../redux/state/AreasState';
 import { RootState } from '../redux/state/RootState';
 
-function* updateItems(event: any, state: RootState) {
+function* updateItems(action: any, state: RootState) {
     const {areas, items} = state
-    const updatedItemId = Number(event.value.dragId)
-    const updatedAreaId = Number(event.value.dropAreaId)
+    const updatedItemId = Number(action.event.dragId)
+    const updatedAreaId = Number(action.event.dropAreaId)
+    if (Number.isNaN(updatedAreaId)) {
+        return
+    }
     const updatedArea = areas[updatedAreaId]
     const updatedAreaState: AreaState = {...updatedArea, itemIds: [...updatedArea.itemIds]}
     const updatedItem = {...items[updatedItemId]}
@@ -33,7 +36,7 @@ function* updateItems(event: any, state: RootState) {
         if (matchingIndex > -1) {
             oldItemIds.splice(matchingIndex, 1)
             oldItemIds[matchingIndex] = 0
-            yield put ({type: 'AREAS/persist-area', value: oldAreaState})
+            yield put ({type: 'AREAS/persist-area', event: oldAreaState})
         }
     }
 
@@ -44,18 +47,20 @@ function* updateItems(event: any, state: RootState) {
         updatedAreaState.itemIds.push(updatedItem.id)
     }
     updatedItem.areaId = updatedAreaId
+    updatedItem.state = 1
+
     yield all([
-        put({type:'AREAS/persist-area', value:updatedAreaState}),
-        put({type: 'ITEMS/persist-item', value:updatedItem})
+        put({type:'AREAS/persist-area', event:updatedAreaState}),
+        put({type: 'ITEMS/persist-item', event:updatedItem})
     ]);
 }
 
-export function* workerItems(event: any) {
+export function* workerItems(action: any) {
     const state: RootState = yield select((state: RootState) => state)
-    yield updateItems(event, state);
+    yield updateItems(action, state);
 }
 
 export default function* watchItems() {
-    yield takeLatest('AREA/update-item', workerItems);
+    yield takeLatest('ITEMS/update-item', workerItems);
     
 }

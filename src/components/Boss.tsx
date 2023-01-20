@@ -1,14 +1,15 @@
 import { Box } from "@mui/material"
 
 export type BossProps = {
-    xpos: number,
+    xpos: number
+    ypos: number
 }
 
 export default function Boss(props: BossProps) {
-    const {xpos} = props
+    const {xpos, ypos} = props
 
     const bossStyles = {
-        background: `url("sm-bosses.png") -${xpos}px 0px`,
+        background: `url("sm-bosses.png") -${xpos}px -${ypos}px`,
         minWidth: 16,
         minHeight: 16,
         width: 16,

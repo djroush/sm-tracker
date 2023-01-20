@@ -6,28 +6,28 @@ export const RIDLEY = 4
 export type BossState = {
     id: number,
     value: string,
-    state: string
+    state: number
 }
 
 export const defaultBossesState: BossState[] = [{
     id: 0,
     value: 'Unknown',
-    state: 'default'
+    state: 0
 }, {
     id: 1,
     value: 'Kraid',
-    state: 'default'
+    state: 1
 }, {
     id: 2,
     value: 'Phantoon',
-    state: 'default'
+    state: 1
 }, {
     id: 3,
     value: 'Draygon',
-    state: 'default'
+    state: 1
 }, {
     id: 4,
     value: 'Ridley',
-    state: 'default'
+    state: 1
 }]
 

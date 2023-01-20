@@ -1,4 +1,4 @@
-import { Box, Divider, Stack, Typography, useTheme } from "@mui/material"
+import { Box, useTheme } from "@mui/material"
 import { PortalState } from "../redux/state/PortalState"
 import Draggable from "./Draggable"
 import Droppable from "./Droppable"

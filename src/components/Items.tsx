@@ -1,12 +1,13 @@
 import { Stack } from "@mui/material"
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { CHARGE_BEAM, GRAPPLE_BEAM, GRAVITY_SUIT, HIGH_JUMP, ICE_BEAM, ItemState, MORPH_BALL, MORPH_BOMBS, PLASMA_BEAM, SCREW_ATTACK, SPACE_JUMP, SPAZER_BEAM, SPEED_BOOSTER, SPRING_BALL, VARIA_SUIT, WAVE_BEAM, XRAY_SCOPE } from "../redux/state/ItemsState"
 import { RootState } from "../redux/state/RootState"
-import Draggable from "./Draggable"
+import Draggable, { DragState } from "./Draggable"
 import Item from "./Item"
 
 export default function Items() {
     const { items } = useSelector((state: RootState) => state)
+    const dispatch = useDispatch()
 
     const morphBall: ItemState = items[MORPH_BALL]
     const morphBombs: ItemState = items[MORPH_BOMBS]
@@ -30,13 +31,17 @@ export default function Items() {
         plasmaBeam, speedBooster, highJump, spaceJump, screwAttack, springBall, grappleBeam, xrayScope
     ]
 
+    const clickHandler = (data: DragState) => {
+        dispatch({'type':'ITEMS/toggle-item', data})
+    }
 
     const elements = itemMap.map((item: ItemState) => {
-        const { id, value } = item
+        const { id, value, state } = item
         const xpos = 16 * id
+        const ypos = state ? 0 : 32
         return (
-            <Draggable key={id} id={id} type='item' value={value}>
-                <Item xpos={xpos} />
+            <Draggable key={id} id={id} type='item' value={value} state={state} clickHandler={clickHandler}>
+                <Item xpos={xpos} ypos={ypos} />
             </Draggable>
         )
     })

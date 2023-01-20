@@ -1,5 +1,5 @@
 import { Box, Grid, Stack, styled, Typography } from "@mui/material"
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { AreaState } from "../redux/state/AreasState"
 import { RootState } from "../redux/state/RootState"
 import AreaBoss from "./AreaBoss"
@@ -7,12 +7,29 @@ import Droppable from "./Droppable"
 import AreaPortal from "./AreaPortal"
 import { PortalState } from "../redux/state/PortalState"
 import AreaItem from "./AreaItem"
+import { DragState } from "./Draggable"
+import { BossState } from "../redux/state/BossesState"
+import { ItemState } from "../redux/state/ItemsState"
 
 
 export default function Area(props: AreaState) {
     const { id, value, bgColor, itemIds, bossId } = props
+    const { portals, bosses, items } = useSelector((state: RootState) => state)
+    const dispatch = useDispatch()
+    const areaBoss = bossId ? bosses[bossId] : undefined
+    const state = areaBoss?.state ?? 0
 
-    const { portals } = useSelector((state: RootState) => state)
+
+    const data: DragState = areaBoss ? {...areaBoss, type: 'boss'} : {} as DragState
+
+    const bossClickHandler = (data: DragState) => {
+        dispatch({'type':'BOSSES/toggle-boss', data})
+    }
+
+    const itemClickHandler = (data: DragState) => {
+        dispatch({'type':'ITEMS/toggle-item', data})
+    }
+
     const areaPortals: PortalState[] = portals.filter(portal => portal.areaId === id)
     const AreaPortals = areaPortals.map(portal => (
         <Grid key={portal.id} item>
@@ -22,8 +39,13 @@ export default function Area(props: AreaState) {
 
     const AreaItems = itemIds.map((itemId, index) => {
         const key = id.toString() + '-' + index.toString()
+        const item: ItemState = items.find(item => item.id === itemId) ?? {} as ItemState
+        const ypos = (1-(item?.state ?? 0)) *32
+        const itemData: DragState = {...item, type: 'item'}
         return (
-            <AreaItem key={key} xpos={16 * itemId} />
+            <Box key={key} onClick={() => itemClickHandler(itemData)}>
+                <AreaItem xpos={16 * itemId} ypos={ypos}/>
+            </Box>
         )
     })
 
@@ -52,7 +74,9 @@ export default function Area(props: AreaState) {
                 <Grid container paddingTop={1} alignItems='center' spacing={1.5}>
                     {AreaPortals}
                     {bossId === undefined ? null : (
-                        <AreaBoss xpos={16 * bossId} outlineColor={bgColor} />
+                        <Box onClick={() => bossClickHandler(data)}>
+                            <AreaBoss xpos={16 * bossId} ypos={16 * (1 - state)} outlineColor={bgColor} />
+                        </Box>
                     )}
                 </Grid>
             </Stack>
