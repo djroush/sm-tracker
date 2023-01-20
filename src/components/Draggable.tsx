@@ -13,7 +13,7 @@ export type DragState = {
 
 export type DraggableProps = DragState & {
   children: JSX.Element|JSX.Element[]|React.ReactFragment,
-  clickHandler?: (dragState: DragState) => void
+  clickHandler?: (dragState: DragState, event?: any) => void
 }
 
 //Still used by Entrance for now
@@ -46,7 +46,7 @@ function DraggableInner(props: DraggableInnerProps) {
 
   if (clickHandler) {
     return (
-      <Box onClick={() => clickHandler(dataState)}>{Draggable}</Box>
+      <Box onClick={(event) => clickHandler(dataState, event)}>{Draggable}</Box>
     )
   }
 

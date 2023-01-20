@@ -1,5 +1,6 @@
 import { spawn } from 'redux-saga/effects'
 import watchBosses from './BossSaga';
+import watchDetachPortal from './DetachPortalSaga';
 import watchItemCounts from './ItemCountSaga';
 import watchItems from './ItemSaga';
 import watchPortals from './PortalSaga';
@@ -13,6 +14,7 @@ export default function* rootSaga() {
     yield spawn(watchItemCounts);
 
     yield spawn(watchToggleBoss);
-    yield spawn(watchToggleItem)
+    yield spawn(watchToggleItem);
+    yield spawn(watchDetachPortal);
 }
 
