@@ -61,7 +61,8 @@ export default function App() {
         <ThemeProvider theme={defaultTheme}>
             <CssBaseline />
             <DndContext sensors={sensors} onDragEnd={handleDragEnd} >
-                <Stack direction="row" spacing={1} margin={2}>
+                <Stack direction="row" spacing={1} margin={2} 
+                    sx={{userSelect: 'none', webkitUserSelect: 'none', msuserSelect: 'none'}}>
                     <Stack direction="column" gap={2}>
                         <Areas />
                         <Items />

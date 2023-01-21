@@ -16,7 +16,7 @@ function* updateItems(action: any, state: RootState) {
 
     //Check for space before inserting item
     const {maxItems, itemIds} = updatedArea
-    const currentItems = itemIds.length
+    const currentItems = itemIds.filter(item=> item !== 0).length
     if (currentItems>=maxItems) {
         return;
     }
