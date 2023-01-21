@@ -38,7 +38,7 @@ export default function Items() {
     const elements = itemMap.map((item: ItemState) => {
         const { id, value, state } = item
         const xpos = 16 * id
-        const ypos = state ? 0 : 32
+        const ypos = state ? 0 : 48
         return (
             <Draggable key={id} id={id} type='item' value={value} state={state} clickHandler={clickHandler}>
                 <Item xpos={xpos} ypos={ypos} />

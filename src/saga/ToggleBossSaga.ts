@@ -3,12 +3,17 @@ import { BossState } from '../redux/state/BossesState';
 import { RootState } from '../redux/state/RootState';
 
 function* toggleBoss(action: any, state: RootState) {
-    const {bosses} = state
+    const {bosses, areas} = state
     const { data } = action
-    const { id, state:dataState } = data
-    const updatedBoss = bosses[id]
-    const updatedBossState: BossState = {...updatedBoss, state: 1 - dataState}
-    yield put({type:'BOSSES/persist-boss', event:updatedBossState});    
+    const { id:bossId, state:dataState } = data
+    const updatedBoss = bosses[bossId]
+
+    //Only allow state to be toggled if boss has been found somewhere
+    const bossFoundArea = areas.find(area => area.bossId === bossId)
+    if (bossFoundArea) {
+        const updatedBossState: BossState = {...updatedBoss, state: 1 - dataState}
+        yield put({type:'BOSSES/persist-boss', event:updatedBossState});    
+    }
 }
 
 export function* workerToggleBoss(action: any) {
