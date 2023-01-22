@@ -40,7 +40,7 @@ export default function Area(props: AreaState) {
     const AreaItems = itemIds.map((itemId, index) => {
         const key = id.toString() + '-' + index.toString()
         const item: ItemState = items.find(item => item.id === itemId) ?? {} as ItemState
-        const ypos = item.state ? 0 : 48 
+        const ypos = (item.state || itemId === 17) ? 0 : 48
         const itemData: DragState = {...item, type: 'item'}
         return (
             <Box key={key} onClick={() => itemClickHandler(itemData)}>

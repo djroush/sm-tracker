@@ -10,6 +10,11 @@ function* updateItems(action: any, state: RootState) {
         return
     }
     const updatedArea = areas[updatedAreaId]
+
+    //17 = 0 items in area
+    if (updatedArea.itemIds.includes(17)) {
+        return
+    }
     const updatedAreaState: AreaState = {...updatedArea, itemIds: [...updatedArea.itemIds]}
     const updatedItem = {...items[updatedItemId]}
     const oldAreaId = updatedItem.areaId

@@ -3,7 +3,7 @@ import { AreaState } from '../redux/state/AreasState';
 import { RootState } from '../redux/state/RootState';
 
 function* updateItemCounts(action: any, state: RootState) {
-    const {areas, items} = state
+    const { areas, items } = state
     const itemCount = Number(action.event.dragValue)
     const updatedAreaId = Number(action.event.dropAreaId)
 
@@ -11,30 +11,39 @@ function* updateItemCounts(action: any, state: RootState) {
         return
     }
     const updatedArea = areas[updatedAreaId]
-    const updatedAreaState: AreaState = {...updatedArea, itemIds: [...updatedArea.itemIds]}
-    const {itemIds: currentItemIds} = updatedAreaState
+    const updatedAreaState: AreaState = { ...updatedArea, itemIds: [...updatedArea.itemIds] }
+    if (itemCount > 0 && updatedArea.itemIds.includes(17)) {
+        updatedAreaState.itemIds = []
+    }
+
+    const { itemIds: currentItemIds } = updatedAreaState
     const updatedItemCount = Math.min(itemCount, updatedArea.maxItems)
     const currentItemCount = currentItemIds.length
-    const missingItemCount =  updatedItemCount - currentItemCount
+    const missingItemCount = updatedItemCount - currentItemCount
 
+    //If fewer items remove items
     if (missingItemCount < 0) {
         const removeItemCount = Math.abs(missingItemCount)
-        const removeIndex = currentItemCount-removeItemCount
+        const removeIndex = currentItemCount - removeItemCount
         const removedItemdIds = currentItemIds.splice(removeIndex, removeItemCount)
         const removedItemActions = items
             .filter(item => removedItemdIds.includes(item.id))
-            .map( item => { return {...item, state: 0} } )
-            .map(item => put({type: 'ITEMS/persist-item', event: item}))
+            .map(item => { return { ...item, state: 0 } })
+            .map(item => put({ type: 'ITEMS/persist-item', event: item }))
 
-            yield all([...removedItemActions])
+        yield all([...removedItemActions])
 
-            yield put({type:'AREAS/persist-area', event:updatedAreaState});
-            yield put({type:'AREAS/persist-area', event:updatedAreaState});
+        if (itemCount === 0) {
+            updatedAreaState.itemIds = [17]
+        }
+        //If less items, add more
     } else if (missingItemCount > 0) {
         const missingItems: number[] = [...Array(missingItemCount)].map(x => 0)
         updatedAreaState.itemIds.push(...missingItems)
-        yield put({type:'AREAS/persist-area', event:updatedAreaState});
+    } else if (itemCount === 0) {
+        updatedAreaState.itemIds = [17]
     }
+    yield put({ type: 'AREAS/persist-area', event: updatedAreaState });
 }
 
 export function* workerItemCounts(action: any) {
@@ -44,5 +53,5 @@ export function* workerItemCounts(action: any) {
 
 export default function* watchItemCounts() {
     yield takeLatest('ITEMCOUNT/update-itemCount', workerItemCounts);
-    
+
 }
