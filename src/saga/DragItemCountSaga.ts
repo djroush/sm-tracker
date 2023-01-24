@@ -3,23 +3,29 @@ import { AreaState } from '../redux/state/AreasState';
 import { RootState } from '../redux/state/RootState';
 
 function* updateItemCounts(action: any, state: RootState) {
-    const { areas, items } = state
-    const itemCount = Number(action.event.dragValue)
+    const { areas, items, itemCount} = state
+    const dragItemCount = Number(action.event.dragValue)
     const updatedAreaId = Number(action.event.dropAreaId)
+    const unknownItems = itemCount.unknown
 
     if (Number.isNaN(updatedAreaId)) {
         return
     }
     const updatedArea = areas[updatedAreaId]
     const updatedAreaState: AreaState = { ...updatedArea, itemIds: [...updatedArea.itemIds] }
-    if (itemCount > 0 && updatedArea.itemIds.includes(17)) {
+    if (dragItemCount > 0 && updatedArea.itemIds.includes(17)) {
         updatedAreaState.itemIds = []
     }
 
     const { itemIds: currentItemIds } = updatedAreaState
-    const updatedItemCount = Math.min(itemCount, updatedArea.maxItems)
     const currentItemCount = currentItemIds.length
-    const missingItemCount = updatedItemCount - currentItemCount
+    if (currentItemCount === dragItemCount && dragItemCount > 0) {
+        return
+    }
+
+    const maxAddCount = updatedArea.maxItems - currentItemCount
+    const maxDragCount = dragItemCount - currentItemCount
+    const missingItemCount = Math.min(maxDragCount, maxAddCount, unknownItems)
 
     //If fewer items remove items
     if (missingItemCount < 0) {
@@ -28,30 +34,30 @@ function* updateItemCounts(action: any, state: RootState) {
         const removedItemdIds = currentItemIds.splice(removeIndex, removeItemCount)
         const removedItemActions = items
             .filter(item => removedItemdIds.includes(item.id))
-            .map(item => { return { ...item, state: 0 } })
+            .map(item => { return { ...item, state: 0, areaId: 0 } })
             .map(item => put({ type: 'ITEMS/persist-item', event: item }))
 
         yield all([...removedItemActions])
 
-        if (itemCount === 0) {
+        if (dragItemCount === 0) {
             updatedAreaState.itemIds = [17]
         }
         //If less items, add more
     } else if (missingItemCount > 0) {
         const missingItems: number[] = [...Array(missingItemCount)].map(x => 0)
         updatedAreaState.itemIds.push(...missingItems)
-    } else if (itemCount === 0) {
+    } else if (dragItemCount === 0) {
         updatedAreaState.itemIds = [17]
     }
-    yield put({ type: 'AREAS/persist-area', event: updatedAreaState });
+    yield put({ type: 'AREAS/persist-area', event: updatedAreaState })
 }
 
-export function* workerItemCounts(action: any) {
+export function* workerDragItemCounts(action: any) {
     const state: RootState = yield select((state: RootState) => state)
     yield updateItemCounts(action, state);
 }
 
-export default function* watchItemCounts() {
-    yield takeLatest('ITEMCOUNT/update-itemCount', workerItemCounts);
+export default function* watchDragItemCounts() {
+    yield takeLatest('ITEMCOUNT/update-itemCount', workerDragItemCounts);
 
 }

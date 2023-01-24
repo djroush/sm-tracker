@@ -23,11 +23,11 @@ function* deleteBoss(action: any, state: RootState) {
     ]);
 }
 
-export function* workerDeleteBoss(action: any) {
+export function* workerDragDeleteBoss(action: any) {
     const state: RootState = yield select((state: RootState) => state)
     yield deleteBoss(action, state);
 }
 
-export default function* watchDeleteBoss() {
-    yield takeLatest('BOSS/delete-boss', workerDeleteBoss);
+export default function* watchDragDeleteBoss() {
+    yield takeLatest('BOSS/delete-boss', workerDragDeleteBoss);
 }

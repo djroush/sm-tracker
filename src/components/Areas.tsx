@@ -3,6 +3,7 @@ import { useSelector } from "react-redux"
 import { AreaState, CRATERIA, CROC, EAST_MARIDIA, GREEN_BRINSTAR, KRAID, LOWER_NORFAIR, RED_BRINSTAR, TOURIAN, UPPER_NORFAIR, WEST_MARIDIA, WRECKED_SHIP } from "../redux/state/AreasState"
 import { RootState } from "../redux/state/RootState"
 import Area from "./Area"
+import ItemInfo from "./ItemInfo"
 
 export default function Areas() {
     const { areas} = useSelector((state: RootState) => state)
@@ -31,13 +32,14 @@ export default function Areas() {
             <Stack direction='row' spacing={3} pt={2}>
                 <Area {...upperNorfair} />
                 <Area {...croc} />
+                <Area {...tourian} />
                 <Area {...kraid} />
             </Stack>
             <Stack direction='row' spacing={3} pt={2}>
                 <Area {...wreckedShip} />
                 <Area {...eastMaridia} />
                 <Area {...lowerNorfair} />
-                <Area {...tourian} />
+                <ItemInfo/>
             </Stack>
         </Stack>
     )

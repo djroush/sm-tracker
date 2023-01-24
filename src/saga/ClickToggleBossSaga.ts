@@ -16,11 +16,11 @@ function* toggleBoss(action: any, state: RootState) {
     }
 }
 
-export function* workerToggleBoss(action: any) {
+export function* workerClickToggleBoss(action: any) {
     const state: RootState = yield select((state: RootState) => state)
     yield toggleBoss(action, state);
 }
 
-export default function* watchToggleBoss() {
-    yield takeLatest('BOSSES/toggle-boss', workerToggleBoss);
+export default function* watchClickToggleBoss() {
+    yield takeLatest('BOSSES/toggle-boss', workerClickToggleBoss);
 }

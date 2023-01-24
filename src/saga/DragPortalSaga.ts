@@ -48,12 +48,12 @@ function* updatePortal(action: any, state: RootState) {
     yield put({type:'PORTALS/persist-portal', event:updatedEntrancePortal});
 }
 
-export function* workerPortals(action: any) {
+export function* workerDragPortals(action: any) {
     const state: RootState = yield select((state: RootState) => state)
     yield updatePortal(action, state);
 }
 
-export default function* watchPortals() {
-    yield takeLatest('PORTAL/update-portals', workerPortals);
+export default function* watchDragPortals() {
+    yield takeLatest('PORTAL/update-portals', workerDragPortals);
     
 }

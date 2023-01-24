@@ -20,11 +20,11 @@ function* detachPortal(action: any, state: RootState) {
     ]);
 }
 
-export function* workerDetachPortal(action: any) {
+export function* workerClickDetachPortal(action: any) {
     const state: RootState = yield select((state: RootState) => state)
     yield detachPortal(action, state);
 }
 
-export default function* watchDetachPortal() {
-    yield takeLatest('PORTALS/detach-portal', workerDetachPortal);
+export default function* watchClickDetachPortal() {
+    yield takeLatest('PORTALS/detach-portal', workerClickDetachPortal);
 }

@@ -6,11 +6,17 @@ import Areas from './Areas';
 import Bosses from './Bosses';
 import Items from './Items';
 import ItemCounts from './ItemCounts';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import RemoveBossIcon from './RemoveBoss';
+import { RootState } from '../redux/state/RootState';
 
 export default function App() {
     const dispatch = useDispatch()
+    const {items, areas} = useSelector((state: RootState) => state)
+
+    React.useEffect(() => {
+        dispatch({type:'ITEMCOUNT/derive-itemCount'})
+    }), [items, areas]
 
     const handleDragEnd = (event: any) => {
         const dragData = event?.active?.data?.current 
@@ -66,7 +72,7 @@ export default function App() {
                     <Stack direction="column" gap={2}>
                         <Areas />
                         <Items />
-                        <Stack direction="row" justifyContent='space-between' paddingRight={1.25}>
+                        <Stack direction="row" paddingRight={1} spacing={3}>
                             <ItemCounts />
                             <Bosses />
                             <RemoveBossIcon />

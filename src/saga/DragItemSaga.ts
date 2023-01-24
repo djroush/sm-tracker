@@ -3,7 +3,8 @@ import { AreaState, UNKNOWN } from '../redux/state/AreasState';
 import { RootState } from '../redux/state/RootState';
 
 function* updateItems(action: any, state: RootState) {
-    const {areas, items} = state
+    const {areas, items, itemCount} = state
+    const {unknown} = itemCount
     const updatedItemId = Number(action.event.dragId)
     const updatedAreaId = Number(action.event.dropAreaId)
     if (Number.isNaN(updatedAreaId)) {
@@ -22,7 +23,8 @@ function* updateItems(action: any, state: RootState) {
     //Check for space before inserting item
     const {maxItems, itemIds} = updatedArea
     const currentItems = itemIds.filter(item=> item !== 0).length
-    if (currentItems>=maxItems) {
+    const canInsert = (unknown > 0 || itemIds.includes(0)) 
+    if (currentItems>=maxItems || !canInsert) {
         return;
     }
 
@@ -36,12 +38,13 @@ function* updateItems(action: any, state: RootState) {
         const oldArea = {...areas[oldAreaId]}
         const oldAreaState: AreaState = {...oldArea, itemIds: [...oldArea.itemIds]}
 
-        const oldItemIds = oldAreaState.itemIds
+        let oldItemIds = oldAreaState.itemIds
         const matchingIndex = oldItemIds.findIndex(itemId => itemId === updatedItem.id)
         if (matchingIndex > -1) {
-            oldItemIds.splice(matchingIndex, 1)
             oldItemIds[matchingIndex] = 0
-            yield put ({type: 'AREAS/persist-area', event: oldAreaState})
+            const removedItemId = oldItemIds.splice(matchingIndex, 1)
+            const itemIds = oldItemIds.concat(removedItemId)
+            yield put ({type: 'AREAS/persist-area', event: {...oldAreaState, itemIds}})
         }
     }
 
@@ -60,12 +63,12 @@ function* updateItems(action: any, state: RootState) {
     ]);
 }
 
-export function* workerItems(action: any) {
+export function* workerDragItems(action: any) {
     const state: RootState = yield select((state: RootState) => state)
     yield updateItems(action, state);
 }
 
-export default function* watchItems() {
-    yield takeLatest('ITEMS/update-item', workerItems);
+export default function* watchDragItems() {
+    yield takeLatest('ITEMS/update-item', workerDragItems);
     
 }

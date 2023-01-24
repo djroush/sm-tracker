@@ -18,12 +18,12 @@ function* updateAreaBoss(action: any, state: RootState) {
     }
 }
 
-export function* workerBosses(action: any) {
+export function* workerDragBosses(action: any) {
     const state: RootState = yield select((state: RootState) => state)
     yield updateAreaBoss(action, state);
 }
 
-export default function* watchBosses() {
-    yield takeLatest('BOSS/update-boss', workerBosses);
+export default function* watchDragBosses() {
+    yield takeLatest('BOSS/update-boss', workerDragBosses);
     
 }

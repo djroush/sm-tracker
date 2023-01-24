@@ -1,22 +1,25 @@
 import { spawn } from 'redux-saga/effects'
-import watchBosses from './BossSaga';
-import watchDeleteBoss from './DeleteBossSaga';
-import watchDetachPortal from './DetachPortalSaga';
-import watchItemCounts from './ItemCountSaga';
-import watchItems from './ItemSaga';
-import watchPortals from './PortalSaga';
-import watchToggleBoss from './ToggleBossSaga';
-import watchToggleItem from './ToggleItemSaga';
+import watchDragBosses from './DragBossSaga';
+import watchDragDeleteBoss from './DragDeleteBossSaga';
+import watchClickDetachPortal from './ClickDetachPortalSaga';
+import watchDragItemCounts from './DragItemCountSaga';
+import watchDragItems from './DragItemSaga';
+import watchDragPortals from './DragPortalSaga';
+import watchClickToggleBoss from './ClickToggleBossSaga';
+import watchClickToggleItem from './ClickToggleItemSaga';
+import watchDeriveItemCount from './DeriveItemCountSaga';
 
 export default function* rootSaga() {
-    yield spawn(watchPortals);
-    yield spawn(watchBosses);
-    yield spawn(watchItems);
-    yield spawn(watchItemCounts);
+    yield spawn(watchDragPortals);
+    yield spawn(watchDragBosses);
+    yield spawn(watchDragItems);
+    yield spawn(watchDragItemCounts);
+    yield spawn(watchDragDeleteBoss);
 
-    yield spawn(watchToggleBoss);
-    yield spawn(watchToggleItem);
-    yield spawn(watchDetachPortal);
-    yield spawn(watchDeleteBoss);
+    yield spawn(watchDeriveItemCount);
+
+    yield spawn(watchClickToggleBoss);
+    yield spawn(watchClickToggleItem);
+    yield spawn(watchClickDetachPortal);   
 }
 
