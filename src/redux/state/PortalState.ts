@@ -3,8 +3,10 @@ export type PortalState = {
     areaId: number,
     entrance: string
     entranceColor: string
-    exit: string|null
-    exitColor: string|null
+    exitId: number,
+    exitAreaId: number
+    exit: string | null
+    exitColor: string | null
 }
 
 export const CRATERIA = 1
@@ -24,13 +26,17 @@ export const defaultPortalState: PortalState[] = [{
     areaId: 0,
     entrance: 'Unknown',
     entranceColor: '#000000',
+    exitId: 0,
+    exitAreaId: 0,
     exit: null,
     exitColor: null
-},{
+}, {
     id: 1,
     areaId: 1,
     entrance: 'Kago',
     entranceColor: '#3B4878',
+    exitId: 0,
+    exitAreaId: 0,
     exit: null,
     exitColor: null
 }, {
@@ -38,6 +44,8 @@ export const defaultPortalState: PortalState[] = [{
     areaId: 1,
     entrance: 'G4',
     entranceColor: '#3B4878',
+    exitId: 0,
+    exitAreaId: 0,
     exit: null,
     exitColor: null
 }, {
@@ -45,6 +53,8 @@ export const defaultPortalState: PortalState[] = [{
     areaId: 1,
     entrance: 'Crab',
     entranceColor: '#3B4878',
+    exitId: 0,
+    exitAreaId: 0,
     exit: null,
     exitColor: null
 }, {
@@ -52,6 +62,8 @@ export const defaultPortalState: PortalState[] = [{
     areaId: 1,
     entrance: 'Moat',
     entranceColor: '#3B4878',
+    exitId: 0,
+    exitAreaId: 0,
     exit: null,
     exitColor: null
 }, {
@@ -59,6 +71,8 @@ export const defaultPortalState: PortalState[] = [{
     areaId: 1,
     entrance: 'Retro PBs',
     entranceColor: '#3B4878',
+    exitId: 0,
+    exitAreaId: 0,
     exit: null,
     exitColor: null
 }, {
@@ -66,13 +80,17 @@ export const defaultPortalState: PortalState[] = [{
     areaId: 2,
     entrance: 'West Elev',
     entranceColor: '#42823D',
+    exitAreaId: 0,
     exit: null,
+    exitId: 0,
     exitColor: null
 }, {
     id: 7,
     areaId: 2,
     entrance: 'Green Hills',
     entranceColor: '#42823D',
+    exitAreaId: 0,
+    exitId: 0,
     exit: null,
     exitColor: null
 }, {
@@ -80,6 +98,8 @@ export const defaultPortalState: PortalState[] = [{
     areaId: 2,
     entrance: 'Noob Bridge',
     entranceColor: '#42823D',
+    exitAreaId: 0,
+    exitId: 0,
     exit: null,
     exitColor: null
 }, {
@@ -87,6 +107,8 @@ export const defaultPortalState: PortalState[] = [{
     areaId: 3,
     entrance: 'Top Elev',
     entranceColor: '#963F39',
+    exitAreaId: 0,
+    exitId: 0,
     exit: null,
     exitColor: null
 }, {
@@ -94,6 +116,8 @@ export const defaultPortalState: PortalState[] = [{
     areaId: 3,
     entrance: 'Top Tunnel',
     entranceColor: '#963F39',
+    exitAreaId: 0,
+    exitId: 0,
     exit: null,
     exitColor: null
 }, {
@@ -101,6 +125,8 @@ export const defaultPortalState: PortalState[] = [{
     areaId: 3,
     entrance: 'Mid Tower',
     entranceColor: '#963F39',
+    exitAreaId: 0,
+    exitId: 0,
     exit: null,
     exitColor: null
 }, {
@@ -108,6 +134,8 @@ export const defaultPortalState: PortalState[] = [{
     areaId: 3,
     entrance: 'Tube',
     entranceColor: '#963F39',
+    exitAreaId: 0,
+    exitId: 0,
     exit: null,
     exitColor: null
 }, {
@@ -115,6 +143,8 @@ export const defaultPortalState: PortalState[] = [{
     areaId: 3,
     entrance: 'Bottom Above',
     entranceColor: '#963F39',
+    exitId: 0,
+    exitAreaId: 0,
     exit: null,
     exitColor: null
 }, {
@@ -122,6 +152,8 @@ export const defaultPortalState: PortalState[] = [{
     areaId: 3,
     entrance: 'Bottom Below',
     entranceColor: '#963F39',
+    exitId: 0,
+    exitAreaId: 0,
     exit: null,
     exitColor: null
 }, {
@@ -129,6 +161,8 @@ export const defaultPortalState: PortalState[] = [{
     areaId: 4,
     entrance: 'Red Fish',
     entranceColor: '#3C6454',
+    exitId: 0,
+    exitAreaId: 0,
     exit: null,
     exitColor: null
 }, {
@@ -136,6 +170,8 @@ export const defaultPortalState: PortalState[] = [{
     areaId: 4,
     entrance: 'Main Street',
     entranceColor: '#3C6454',
+    exitId: 0,
+    exitAreaId: 0,
     exit: null,
     exitColor: null
 }, {
@@ -143,6 +179,8 @@ export const defaultPortalState: PortalState[] = [{
     areaId: 4,
     entrance: 'Map Station',
     entranceColor: '#3C6454',
+    exitId: 0,
+    exitAreaId: 0,
     exit: null,
     exitColor: null
 }, {
@@ -150,6 +188,8 @@ export const defaultPortalState: PortalState[] = [{
     areaId: 4,
     entrance: 'Crab Shaft',
     entranceColor: '#3C6454',
+    exitId: 0,
+    exitAreaId: 0,
     exit: null,
     exitColor: null
 }, {
@@ -157,6 +197,8 @@ export const defaultPortalState: PortalState[] = [{
     areaId: 5,
     entrance: 'Top Left',
     entranceColor: '#E27400',
+    exitId: 0,
+    exitAreaId: 0,
     exit: null,
     exitColor: null
 }, {
@@ -164,6 +206,8 @@ export const defaultPortalState: PortalState[] = [{
     areaId: 5,
     entrance: 'Top Right',
     entranceColor: '#E27400',
+    exitId: 0,
+    exitAreaId: 0,
     exit: null,
     exitColor: null
 }, {
@@ -171,6 +215,8 @@ export const defaultPortalState: PortalState[] = [{
     areaId: 5,
     entrance: 'Croc Entry',
     entranceColor: '#E27400',
+    exitId: 0,
+    exitAreaId: 0,
     exit: null,
     exitColor: null
 }, {
@@ -178,6 +224,8 @@ export const defaultPortalState: PortalState[] = [{
     areaId: 5,
     entrance: 'Lava Dive',
     entranceColor: '#E27400',
+    exitId: 0,
+    exitAreaId: 0,
     exit: null,
     exitColor: null
 }, {
@@ -185,6 +233,8 @@ export const defaultPortalState: PortalState[] = [{
     areaId: 5,
     entrance: 'Back Door',
     entranceColor: '#E27400',
+    exitId: 0,
+    exitAreaId: 0,
     exit: null,
     exitColor: null
 }, {
@@ -192,6 +242,8 @@ export const defaultPortalState: PortalState[] = [{
     areaId: 6,
     entrance: 'Croc',
     entranceColor: '#F8280F',
+    exitId: 0,
+    exitAreaId: 0,
     exit: null,
     exitColor: null
 }, {
@@ -199,6 +251,8 @@ export const defaultPortalState: PortalState[] = [{
     areaId: 7,
     entrance: 'Kraid',
     entranceColor: '#73C403',
+    exitId: 0,
+    exitAreaId: 0,
     exit: null,
     exitColor: null
 }, {
@@ -206,6 +260,8 @@ export const defaultPortalState: PortalState[] = [{
     areaId: 8,
     entrance: 'West Ocean',
     entranceColor: '#FFD700',
+    exitId: 0,
+    exitAreaId: 0,
     exit: null,
     exitColor: null
 }, {
@@ -213,6 +269,8 @@ export const defaultPortalState: PortalState[] = [{
     areaId: 8,
     entrance: 'Crab Maze',
     entranceColor: '#FFD700',
+    exitId: 0,
+    exitAreaId: 0,
     exit: null,
     exitColor: null
 }, {
@@ -220,6 +278,8 @@ export const defaultPortalState: PortalState[] = [{
     areaId: 9,
     entrance: 'Aqueduct',
     entranceColor: '#B076FF',
+    exitId: 0,
+    exitAreaId: 0,
     exit: null,
     exitColor: null
 }, {
@@ -227,6 +287,8 @@ export const defaultPortalState: PortalState[] = [{
     areaId: 9,
     entrance: 'Highway',
     entranceColor: '#B076FF',
+    exitId: 0,
+    exitAreaId: 0,
     exit: null,
     exitColor: null
 }, {
@@ -234,6 +296,8 @@ export const defaultPortalState: PortalState[] = [{
     areaId: 10,
     entrance: 'Ridley Mouth',
     entranceColor: '#D68C73',
+    exitId: 0,
+    exitAreaId: 0,
     exit: null,
     exitColor: null
 }, {
@@ -241,6 +305,8 @@ export const defaultPortalState: PortalState[] = [{
     areaId: 10,
     entrance: 'LN Escape',
     entranceColor: '#D68C73',
+    exitId: 0,
+    exitAreaId: 0,
     exit: null,
     exitColor: null
 }, {
@@ -248,6 +314,8 @@ export const defaultPortalState: PortalState[] = [{
     areaId: 11,
     entrance: 'Tourian',
     entranceColor: '#818181',
+    exitId: 0,
+    exitAreaId: 0,
     exit: null,
     exitColor: null
 }]

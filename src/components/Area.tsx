@@ -58,6 +58,7 @@ export default function Area(props: AreaState) {
         maxWidth: 120,
         alignSelf: 'center',
         position: 'absolute',
+        zIndex: 500,
         left: 4,
         top: 4,
         marginRight: 16

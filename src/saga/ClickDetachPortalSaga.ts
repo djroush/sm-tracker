@@ -12,8 +12,8 @@ function* detachPortal(action: any, state: RootState) {
     if (portalExit === undefined) {
         return;
     }
-    const updatedPortalEntrance: PortalState = { ...portalEntrance, exit: null, exitColor: null }
-    const updatedPortalExit: PortalState = { ...portalExit, exit: null, exitColor: null }
+    const updatedPortalEntrance: PortalState = { ...portalEntrance, exit: null, exitId: 0, exitAreaId: 0, exitColor: null }
+    const updatedPortalExit: PortalState = { ...portalExit, exit: null, exitId: 0, exitAreaId: 0, exitColor: null }
     yield all([
         put({ type: 'PORTALS/persist-portal', event: updatedPortalEntrance }),
         put({ type: 'PORTALS/persist-portal', event: updatedPortalExit })
